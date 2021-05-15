@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NUMAD21Su-MohammadSJaleel</string>
+    <string name="show_info">About</string>
+    <string name="hide_info">Hide</string>
+    <string name="hello_world_text">Hello World!</string>
+    <string name="name_address_text"/>
+</resources>
