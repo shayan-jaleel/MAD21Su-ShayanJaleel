@@ -3,6 +3,20 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\jalee\\OneDrive\\Documents\\CS5520\\keystores\\keystore.jks')
+            storePassword 'password'
+            keyPassword 'password'
+            keyAlias 'key0'
+        }
+        rel {
+            storeFile file('C:\\Users\\jalee\\OneDrive\\Documents\\CS5520\\keystores\\keystore.jks')
+            storePassword 'password'
+            keyPassword 'password'
+            keyAlias 'key0'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
