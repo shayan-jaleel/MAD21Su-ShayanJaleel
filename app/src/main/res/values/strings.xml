@@ -3,5 +3,12 @@
     <string name="show_info">About</string>
     <string name="hide_info">Hide</string>
     <string name="hello_world_text">Hello World!</string>
-    <string name="name_address_text"/>
+    <string name="name_address_text" />
+    <string name="a">A</string>
+    <string name="b">B</string>
+    <string name="c">C</string>
+    <string name="d">D</string>
+    <string name="e">E</string>
+    <string name="f">F</string>
+    <string name="pressed">Pressed: </string>
 </resources>
