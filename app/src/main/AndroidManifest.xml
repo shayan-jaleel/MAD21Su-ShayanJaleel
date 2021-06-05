@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_mj_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NUMAD21SuMohammadSJaleel">
-        <activity android:name=".LinkCollector"></activity>
+        <activity android:name=".LinkCollectorActivity"></activity>
         <activity android:name=".A3Activity" />
         <activity android:name=".MainActivity">
             <intent-filter>

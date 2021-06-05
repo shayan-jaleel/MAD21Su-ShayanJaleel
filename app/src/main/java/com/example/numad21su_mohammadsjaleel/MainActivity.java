@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void openLinkCollector(View view) {
-        Intent intent = new Intent(this, LinkCollector.class);
+        Intent intent = new Intent(this, LinkCollectorActivity.class);
         startActivity(intent);
     }
 }
