@@ -37,4 +37,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, A3Activity.class);
         startActivity(intent);
     }
+    public void openLinkCollector(View view) {
+        Intent intent = new Intent(this, LinkCollector.class);
+        startActivity(intent);
+    }
 }
