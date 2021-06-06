@@ -3,20 +3,21 @@ package com.example.numad21su_mohammadsjaleel;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-        import androidx.recyclerview.widget.ItemTouchHelper;
-        import androidx.recyclerview.widget.LinearLayoutManager;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import android.os.Bundle;
-        import android.view.View;
+import android.os.Bundle;
+import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-        import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-        import java.util.ArrayList;
-        import java.util.Random;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LinkCollectorActivity extends AppCompatActivity {
     //Creating the essential parts needed for a Recycler view to work: RecyclerView, Adapter, LayoutManager
@@ -35,6 +36,8 @@ public class LinkCollectorActivity extends AppCompatActivity {
 
     private static final String KEY_OF_INSTANCE = "KEY_OF_INSTANCE";
     private static final String NUMBER_OF_ITEMS = "NUMBER_OF_ITEMS";
+    private static final String HTTPS = "https://";
+    private static final String HTTP = "http://";
 
 
     @Override
@@ -177,13 +180,22 @@ public class LinkCollectorActivity extends AppCompatActivity {
 
     }
 
-    private void addItem(int position) {
+    private boolean addItem(int position) {
+        String potentialUrl = popup_url.getText().toString();
+        if (!Patterns.WEB_URL.matcher(potentialUrl).matches()) {
+            Toast.makeText(LinkCollectorActivity.this, "Invalid Url", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!potentialUrl.startsWith(HTTP) && !potentialUrl.startsWith(HTTPS)) {
+            potentialUrl = HTTP + potentialUrl;
+        }
         itemList.add(position, new ItemCard(R.drawable.empty,
-                popup_name.getText().toString(), popup_url.getText().toString(),
+                popup_name.getText().toString(), potentialUrl,
                 false));
-        Toast.makeText(LinkCollectorActivity.this, "Add an item", Toast.LENGTH_SHORT).show();
+        Toast.makeText(LinkCollectorActivity.this, "URL added successfully!", Toast.LENGTH_SHORT).show();
 
         rviewAdapter.notifyItemInserted(position);
+        return true;
     }
 
     public void createUrlPopup() {
@@ -199,8 +211,9 @@ public class LinkCollectorActivity extends AppCompatActivity {
         popup_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addItem(0);
-                dialog.dismiss();
+                if (addItem(0)) {
+                    dialog.dismiss();
+                }
             }
         });
         popup_cancel.setOnClickListener(new View.OnClickListener() {

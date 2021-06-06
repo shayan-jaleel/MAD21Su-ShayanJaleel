@@ -3,6 +3,7 @@ package com.example.numad21su_mohammadsjaleel;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.Toast;
 
 public class ItemCard implements ItemClickListener {
 
@@ -48,16 +49,18 @@ public class ItemCard implements ItemClickListener {
         isChecked = !isChecked;
     }
 
-    /**
-     * Open a web page of a specified URL
-     *
-     * @param url URL to open
-     */
+
     public void openWebPage(Context context, String url) {
-        Uri webpage = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(intent);
+        try {
+            Uri webpage = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+            if (intent.resolveActivity(context.getPackageManager()) != null) {
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, "Invalid URL", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e){
+            Toast.makeText(context, "Invalid URL", Toast.LENGTH_SHORT).show();
         }
     }
 
