@@ -48,8 +48,9 @@ public class LinkCollectorActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int pos = 0;
-                addItem(pos);
+//                int pos = 0;
+                createUrlPopup();
+//                addItem(pos);
             }
         });
 
@@ -177,14 +178,36 @@ public class LinkCollectorActivity extends AppCompatActivity {
     }
 
     private void addItem(int position) {
-        itemList.add(position, new ItemCard(R.drawable.empty, "No Logo item", "Item id: " + Math.abs(new Random().nextInt(100000)), false));
+        itemList.add(position, new ItemCard(R.drawable.empty,
+                popup_name.getText().toString(), "Item id: " + Math.abs(new Random().nextInt(100000)),
+                false));
         Toast.makeText(LinkCollectorActivity.this, "Add an item", Toast.LENGTH_SHORT).show();
 
         rviewAdapter.notifyItemInserted(position);
     }
 
-    public void createUrlDialog() {
+    public void createUrlPopup() {
         dialogBuilder = new AlertDialog.Builder(this);
         final View urlPopupView = getLayoutInflater().inflate(R.layout.url_popup, null);
+        popup_name = urlPopupView.findViewById(R.id.url_popup_name);
+        popup_url = urlPopupView.findViewById(R.id.url_popup_url);
+        popup_save = urlPopupView.findViewById(R.id.url_popup_save);
+        popup_cancel = urlPopupView.findViewById(R.id.url_popup_cancel);
+        dialogBuilder.setView(urlPopupView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+        popup_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addItem(0);
+                dialog.dismiss();
+            }
+        });
+        popup_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 }
