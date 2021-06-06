@@ -1,39 +1,17 @@
 package com.example.numad21su_mohammadsjaleel;
 
-//import androidx.annotation.NonNull;
-//import androidx.appcompat.app.AppCompatActivity;
-//import androidx.recyclerview.widget.ItemTouchHelper;
-//import androidx.recyclerview.widget.LinearLayoutManager;
-//import androidx.recyclerview.widget.RecyclerView;
-//
-//import android.os.Bundle;
-//import android.view.View;
-//import android.widget.Toast;
-//
-//import com.google.android.material.floatingactionbutton.FloatingActionButton;
-//
-//import java.util.ArrayList;
-//import java.util.Random;
-//
-//public class LinkCollectorActivity extends AppCompatActivity {
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_link_collector);
-//    }
-//}
-
-
 import androidx.annotation.NonNull;
-        import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
         import androidx.recyclerview.widget.ItemTouchHelper;
         import androidx.recyclerview.widget.LinearLayoutManager;
         import androidx.recyclerview.widget.RecyclerView;
 
         import android.os.Bundle;
         import android.view.View;
-        import android.widget.Toast;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
         import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -43,7 +21,12 @@ import androidx.annotation.NonNull;
 public class LinkCollectorActivity extends AppCompatActivity {
     //Creating the essential parts needed for a Recycler view to work: RecyclerView, Adapter, LayoutManager
     private ArrayList<ItemCard> itemList = new ArrayList<>();
-    ;
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+    private EditText popup_name;
+    private EditText popup_url;
+    private Button popup_cancel;
+    private Button popup_save;
 
     private RecyclerView recyclerView;
     private RviewAdapter rviewAdapter;
@@ -198,5 +181,10 @@ public class LinkCollectorActivity extends AppCompatActivity {
         Toast.makeText(LinkCollectorActivity.this, "Add an item", Toast.LENGTH_SHORT).show();
 
         rviewAdapter.notifyItemInserted(position);
+    }
+
+    public void createUrlDialog() {
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View urlPopupView = getLayoutInflater().inflate(R.layout.url_popup, null);
     }
 }
