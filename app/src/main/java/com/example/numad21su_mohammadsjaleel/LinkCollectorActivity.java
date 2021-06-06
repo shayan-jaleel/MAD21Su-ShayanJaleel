@@ -89,9 +89,9 @@ public class LinkCollectorActivity extends AppCompatActivity {
             // put image information id into instance
             outState.putInt(KEY_OF_INSTANCE + i + "0", itemList.get(i).getImageSource());
             // put itemName information into instance
-            outState.putString(KEY_OF_INSTANCE + i + "1", itemList.get(i).getItemName());
+            outState.putString(KEY_OF_INSTANCE + i + "1", itemList.get(i).getUrlName());
             // put itemDesc information into instance
-            outState.putString(KEY_OF_INSTANCE + i + "2", itemList.get(i).getItemDesc());
+            outState.putString(KEY_OF_INSTANCE + i + "2", itemList.get(i).getUrlText());
             // put isChecked information into instance
             outState.putBoolean(KEY_OF_INSTANCE + i + "3", itemList.get(i).getStatus());
         }
@@ -133,12 +133,12 @@ public class LinkCollectorActivity extends AppCompatActivity {
         }
         // The first time to opne this Activity
         else {
-            ItemCard item1 = new ItemCard(R.drawable.pic_gmail_01, "Gmail", "Example description", false);
-            ItemCard item2 = new ItemCard(R.drawable.pic_google_01, "Google", "Example description", false);
-            ItemCard item3 = new ItemCard(R.drawable.pic_youtube_01, "Youtube", "Example description", false);
-            itemList.add(item1);
-            itemList.add(item2);
-            itemList.add(item3);
+//            ItemCard item1 = new ItemCard(R.drawable.pic_gmail_01, "Gmail", "Example description", false);
+//            ItemCard item2 = new ItemCard(R.drawable.pic_google_01, "Google", "Example description", false);
+//            ItemCard item3 = new ItemCard(R.drawable.pic_youtube_01, "Youtube", "Example description", false);
+//            itemList.add(item1);
+//            itemList.add(item2);
+//            itemList.add(item3);
         }
 
     }
@@ -179,7 +179,7 @@ public class LinkCollectorActivity extends AppCompatActivity {
 
     private void addItem(int position) {
         itemList.add(position, new ItemCard(R.drawable.empty,
-                popup_name.getText().toString(), "Item id: " + Math.abs(new Random().nextInt(100000)),
+                popup_name.getText().toString(), popup_url.getText().toString(),
                 false));
         Toast.makeText(LinkCollectorActivity.this, "Add an item", Toast.LENGTH_SHORT).show();
 

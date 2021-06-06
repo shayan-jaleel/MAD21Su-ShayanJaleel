@@ -3,6 +3,7 @@
     package="com.example.numad21su_mohammadsjaleel">
 
     <application
+        android:name="com.example.numad21su_mohammadsjaleel.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_mj"
         android:label="@string/app_name"
