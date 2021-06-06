@@ -66,7 +66,7 @@ public class LinkCollectorActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                Toast.makeText(LinkCollectorActivity.this, "Delete an item", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LinkCollectorActivity.this, "Deleted!", Toast.LENGTH_SHORT).show();
                 int position = viewHolder.getLayoutPosition();
                 itemList.remove(position);
 
@@ -95,8 +95,6 @@ public class LinkCollectorActivity extends AppCompatActivity {
             outState.putString(KEY_OF_INSTANCE + i + "1", itemList.get(i).getUrlName());
             // put itemDesc information into instance
             outState.putString(KEY_OF_INSTANCE + i + "2", itemList.get(i).getUrlText());
-            // put isChecked information into instance
-            outState.putBoolean(KEY_OF_INSTANCE + i + "3", itemList.get(i).getStatus());
         }
         super.onSaveInstanceState(outState);
 
@@ -128,7 +126,7 @@ public class LinkCollectorActivity extends AppCompatActivity {
                     if (isChecked) {
                         itemName = itemName.substring(0, itemName.lastIndexOf("("));
                     }
-                    ItemCard itemCard = new ItemCard(imgId, itemName, itemDesc, isChecked);
+                    ItemCard itemCard = new ItemCard(imgId, itemName, itemDesc);
 
                     itemList.add(itemCard);
                 }
@@ -163,14 +161,6 @@ public class LinkCollectorActivity extends AppCompatActivity {
 
                 rviewAdapter.notifyItemChanged(position);
             }
-
-            @Override
-            public void onCheckBoxClick(int position) {
-                //attributions bond to the item has been changed
-                itemList.get(position).onCheckBoxClick(position);
-
-                rviewAdapter.notifyItemChanged(position);
-            }
         };
         rviewAdapter.setOnItemClickListener(itemClickListener);
 
@@ -190,8 +180,7 @@ public class LinkCollectorActivity extends AppCompatActivity {
             potentialUrl = HTTP + potentialUrl;
         }
         itemList.add(position, new ItemCard(R.drawable.empty,
-                popup_name.getText().toString(), potentialUrl,
-                false));
+                popup_name.getText().toString(), potentialUrl));
         Toast.makeText(LinkCollectorActivity.this, "URL added successfully!", Toast.LENGTH_SHORT).show();
 
         rviewAdapter.notifyItemInserted(position);

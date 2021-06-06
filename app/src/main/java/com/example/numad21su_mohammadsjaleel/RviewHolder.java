@@ -33,17 +33,5 @@ public class RviewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
-
-        checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    int position = getLayoutPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onCheckBoxClick(position);
-                    }
-                }
-            }
-        });
     }
 }

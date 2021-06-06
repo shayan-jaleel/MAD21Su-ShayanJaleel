@@ -35,7 +35,6 @@ public class RviewAdapter extends RecyclerView.Adapter<RviewHolder> {
         holder.itemIcon.setImageResource(currentItem.getImageSource());
         holder.itemName.setText(currentItem.getUrlName());
         holder.itemDesc.setText(currentItem.getUrlText());
-        holder.checkBox.setChecked(currentItem.getStatus());
     }
 
     @Override

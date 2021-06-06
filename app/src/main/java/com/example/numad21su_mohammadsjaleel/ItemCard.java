@@ -10,14 +10,12 @@ public class ItemCard implements ItemClickListener {
     private final int imageSource;
     private final String urlName;
     private final String urlText;
-    private boolean isChecked;
 
     //Constructor
-    public ItemCard(int imageSource, String urlName, String urlText, boolean isChecked) {
+    public ItemCard(int imageSource, String urlName, String urlText) {
         this.imageSource = imageSource;
         this.urlName = urlName;
         this.urlText = urlText;
-        this.isChecked = isChecked;
     }
 
     //Getters for the imageSource, itemName and itemDesc
@@ -30,23 +28,15 @@ public class ItemCard implements ItemClickListener {
     }
 
     public String getUrlName() {
-        return urlName + (isChecked ? "(checked)" : "");
+        return urlName;
+//        return urlName + (isChecked ? "(checked)" : "");
     }
 
-    public boolean getStatus() {
-        return isChecked;
-    }
 
 
     @Override
     public void onItemClick(int position) {
-        isChecked = !isChecked;
         openWebPage(App.context, urlText.toString());
-    }
-
-    @Override
-    public void onCheckBoxClick(int position) {
-        isChecked = !isChecked;
     }
 
 
