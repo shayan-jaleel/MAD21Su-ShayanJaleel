@@ -3,6 +3,7 @@ package com.example.numad21su_mohammadsjaleel;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,6 +30,7 @@ public class LinkCollectorActivity extends AppCompatActivity {
     private EditText popup_url;
     private Button popup_cancel;
     private Button popup_save;
+    ConstraintLayout constraintLayout;
 
     private RecyclerView recyclerView;
     private RviewAdapter rviewAdapter;
@@ -48,6 +51,7 @@ public class LinkCollectorActivity extends AppCompatActivity {
         init(savedInstanceState);
 
         addButton = findViewById(R.id.addButton);
+        constraintLayout = findViewById(R.id.link_collector_layout);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,7 +185,10 @@ public class LinkCollectorActivity extends AppCompatActivity {
         }
         itemList.add(position, new ItemCard(R.drawable.empty,
                 popup_name.getText().toString(), potentialUrl));
-        Toast.makeText(LinkCollectorActivity.this, "URL added successfully!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(LinkCollectorActivity.this, "URL added successfully!", Toast.LENGTH_SHORT).show();
+        Snackbar snackbar = Snackbar
+                .make(constraintLayout, "URL Created!", Snackbar.LENGTH_LONG);
+        snackbar.show();
 
         rviewAdapter.notifyItemInserted(position);
         return true;
