@@ -41,4 +41,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LinkCollectorActivity.class);
         startActivity(intent);
     }
+    public void openLocation(View view) {
+        Intent intent = new Intent(this, LocationActivity.class);
+        startActivity(intent);
+    }
 }

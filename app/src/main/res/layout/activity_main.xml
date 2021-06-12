@@ -69,6 +69,7 @@
         android:id="@+id/button2"
         android:layout_width="122dp"
         android:layout_height="70dp"
+        android:onClick="openLocation"
         android:text="@string/location_btn"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
