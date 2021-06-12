@@ -17,4 +17,6 @@
     <string name="url_popup_heading">Add New URL</string>
     <string name="url_popup_save">Save</string>
     <string name="url_popup_cancel">Cancel</string>
+    <string name="location_latitude">Latitude</string>
+    <string name="location_longitude">Longitude</string>
 </resources>
