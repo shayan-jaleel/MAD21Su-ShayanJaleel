@@ -3,15 +3,49 @@ package com.example.numad21su_mohammadsjaleel;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class LocationActivity extends AppCompatActivity {
+    public static final String LOCATION_LOG_TAG = "LOCATION_LOG";
     private ActivityResultLauncher<String> requestPermissionLauncher;
+    private FusedLocationProviderClient fusedLocationClient;
+
+    private void useLocation() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            Log.d(LOCATION_LOG_TAG, location.toString());
+                            TextView latTextView = findViewById(R.id.lat_val);
+                            latTextView.setText(String.valueOf(location.getLatitude()));
+                            TextView lonTextView = findViewById(R.id.lon_val);
+                            lonTextView.setText(String.valueOf(location.getLongitude()));
+                        }
+                    }
+                });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +57,10 @@ public class LocationActivity extends AppCompatActivity {
         requestPermissionLauncher =
                 registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                     if (isGranted) {
-                        Log.d("hi", "permission successfully granted");
+                        Log.d(LOCATION_LOG_TAG, "Permission successfully granted");
                         // Permission is granted. Continue the action or workflow in your
                         // app.
+                        useLocation();
                     } else {
                         // Explain to the user that the feature is unavailable because the
                         // features requires a permission that the user has denied. At the
@@ -38,8 +73,8 @@ public class LocationActivity extends AppCompatActivity {
                 App.context, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
             // You can use the API that requires the permission.
-//            performAction(...);
-            Log.d("hi", "permission already granted");
+            Log.d(LOCATION_LOG_TAG, "Permission already granted");
+            useLocation();
         }
 //        else if (shouldShowRequestPermissionRationale(...)) {
 //            // In an educational UI, explain to the user why your app requires this
@@ -51,7 +86,7 @@ public class LocationActivity extends AppCompatActivity {
         else {
             // You can directly ask for the permission.
             // The registered ActivityResultCallback gets the result of this request.
-            Log.d("hi", "grant permission");
+            Log.d("LOCATION_LOG_TAG", "Grant permission");
             requestPermissionLauncher.launch(
                     Manifest.permission.ACCESS_FINE_LOCATION);
         }
