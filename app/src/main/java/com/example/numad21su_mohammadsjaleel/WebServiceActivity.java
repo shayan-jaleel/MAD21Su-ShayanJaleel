@@ -6,10 +6,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,6 +20,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WebServiceActivity extends AppCompatActivity {
 
@@ -27,6 +32,9 @@ public class WebServiceActivity extends AppCompatActivity {
 
     private EditText mURLEditText;
     private TextView mTitleTextView;
+    private ListView resultsListView;
+    private ArrayList<String> resultsStringList;
+    ArrayAdapter<String> stringArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +43,28 @@ public class WebServiceActivity extends AppCompatActivity {
 
         mURLEditText = (EditText)findViewById(R.id.URL_editText);
         mTitleTextView = (TextView)findViewById(R.id.result_textview);
+        resultsListView = (ListView) findViewById(R.id.result_listview);
 
+        resultsStringList = new ArrayList<>();
+        stringArrayAdapter = new ArrayAdapter<>(App.context,
+                android.R.layout.simple_list_item_1, resultsStringList);
+        resultsListView.setAdapter(stringArrayAdapter);
+
+        if(savedInstanceState != null && savedInstanceState.getStringArrayList("ResultsList") != null){
+            resultsStringList.addAll(savedInstanceState.getStringArrayList("ResultsList"));
+            stringArrayAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate if the process is
+        // killed and restarted.
+//        TextView textView = findViewById(R.id.text_pressed);
+        savedInstanceState.putStringArrayList("ResultsList", resultsStringList);
     }
 
     public void callWebserviceButtonHandler(View view){
@@ -100,9 +129,14 @@ public class WebServiceActivity extends AppCompatActivity {
         protected void onPostExecute(JSONObject jObject) {
             super.onPostExecute(jObject);
             TextView result_view = (TextView)findViewById(R.id.result_textview);
-
             try {
-                result_view.setText(jObject.getJSONArray("Search").toString());
+//                result_view.setText(jObject.getJSONArray("Search").toString());
+                JSONArray jsonArray = jObject.getJSONArray("Search");
+                resultsStringList.clear();
+                for(int i = 0; i < jsonArray.length(); i++){
+                    resultsStringList.add(jsonArray.getJSONObject(i).getString("Title"));
+                }
+                stringArrayAdapter.notifyDataSetChanged();
 //                result_view.setText(jObject.getString("Title"));
             } catch (JSONException e) {
                 result_view.setText("Something went wrong!");
