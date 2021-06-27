@@ -20,4 +20,5 @@
     <string name="location_latitude">Latitude</string>
     <string name="location_longitude">Longitude</string>
     <string name="location_btn">Loc</string>
+    <string name="service_btn">A6</string>
 </resources>
