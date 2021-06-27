@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class WebServiceActivity extends AppCompatActivity {
     private TextView mTitleTextView;
     private ListView resultsListView;
     private ArrayList<String> resultsStringList;
+    private ProgressBar spinner;
     ArrayAdapter<String> stringArrayAdapter;
 
     @Override
@@ -49,6 +52,8 @@ public class WebServiceActivity extends AppCompatActivity {
         stringArrayAdapter = new ArrayAdapter<>(App.context,
                 android.R.layout.simple_list_item_1, resultsStringList);
         resultsListView.setAdapter(stringArrayAdapter);
+        spinner = (ProgressBar)findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
 
         if(savedInstanceState != null && savedInstanceState.getStringArrayList("ResultsList") != null){
             resultsStringList.addAll(savedInstanceState.getStringArrayList("ResultsList"));
@@ -70,9 +75,13 @@ public class WebServiceActivity extends AppCompatActivity {
     public void callWebserviceButtonHandler(View view){
         PingWebServiceTask task = new PingWebServiceTask();
         try {
-            String url = NetworkUtil.validInput(SEARCH_QUERY +
-                    mURLEditText.getText().toString() + API_QUERY);
-            task.execute(url); // This is a security risk.  Don't let your user enter the URL in a real app.
+            String searchQuery = mURLEditText.getText().toString();
+            if(searchQuery != null && !searchQuery.isEmpty()){
+                String url = NetworkUtil.validInput(SEARCH_QUERY +
+                        mURLEditText.getText().toString() + API_QUERY);
+                spinner.setVisibility(View.VISIBLE);
+                task.execute(url); // This is a security risk.  Don't let your user enter the URL in a real app.
+            }
         } catch (NetworkUtil.MyException e) {
             Toast.makeText(getApplication(),e.toString(),Toast.LENGTH_SHORT).show();
         }
@@ -81,7 +90,7 @@ public class WebServiceActivity extends AppCompatActivity {
 
     // Google is deprecating Android AsyncTask API in Android 11 and suggesting to use java.util.concurrent
     // But it is still important to learn&manage how it works
-    private class PingWebServiceTask  extends AsyncTask<String, Integer, JSONObject> {
+    private class PingWebServiceTask extends AsyncTask<String, Integer, JSONObject> {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
@@ -90,7 +99,7 @@ public class WebServiceActivity extends AppCompatActivity {
 
         @Override
         protected JSONObject doInBackground(String... params) {
-
+//            SystemClock.sleep(3000);
             JSONObject jObject = new JSONObject();
             try {
 
@@ -138,8 +147,11 @@ public class WebServiceActivity extends AppCompatActivity {
                 }
                 stringArrayAdapter.notifyDataSetChanged();
 //                result_view.setText(jObject.getString("Title"));
+
+                spinner.setVisibility(View.GONE);
             } catch (JSONException e) {
-                result_view.setText("Something went wrong!");
+                spinner.setVisibility(View.GONE);
+//                result_view.setText("Something went wrong!");
             }
 
         }
