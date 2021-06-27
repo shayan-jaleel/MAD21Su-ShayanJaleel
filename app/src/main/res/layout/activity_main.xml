@@ -100,6 +100,7 @@
         android:id="@+id/button4"
         android:layout_width="108dp"
         android:layout_height="55dp"
+        android:onClick="openA6"
         android:text="@string/service_btn"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toEndOf="parent"

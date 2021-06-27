@@ -45,4 +45,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LocationActivity.class);
         startActivity(intent);
     }
+    public void openA6(View view) {
+        Intent intent = new Intent(this, WebServiceActivity.class);
+        startActivity(intent);
+    }
 }
