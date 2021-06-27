@@ -21,6 +21,9 @@ import java.net.URL;
 public class WebServiceActivity extends AppCompatActivity {
 
     private static final String TAG = "WebServiceActivity";
+    private static final String API_QUERY = "&apikey=4c810120";
+    private static final String SEARCH_QUERY = "https://www.omdbapi.com/?s=";
+    private static final String DETAILS_QUERY = "https://www.omdbapi.com/?i=";
 
     private EditText mURLEditText;
     private TextView mTitleTextView;
@@ -38,7 +41,8 @@ public class WebServiceActivity extends AppCompatActivity {
     public void callWebserviceButtonHandler(View view){
         PingWebServiceTask task = new PingWebServiceTask();
         try {
-            String url = NetworkUtil.validInput(mURLEditText.getText().toString());
+            String url = NetworkUtil.validInput(SEARCH_QUERY +
+                    mURLEditText.getText().toString() + API_QUERY);
             task.execute(url); // This is a security risk.  Don't let your user enter the URL in a real app.
         } catch (NetworkUtil.MyException e) {
             Toast.makeText(getApplication(),e.toString(),Toast.LENGTH_SHORT).show();
@@ -98,7 +102,8 @@ public class WebServiceActivity extends AppCompatActivity {
             TextView result_view = (TextView)findViewById(R.id.result_textview);
 
             try {
-                result_view.setText(jObject.getString("title"));
+                result_view.setText(jObject.getJSONArray("Search").toString());
+//                result_view.setText(jObject.getString("Title"));
             } catch (JSONException e) {
                 result_view.setText("Something went wrong!");
             }
