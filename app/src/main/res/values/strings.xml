@@ -10,7 +10,7 @@
     <string name="d">D</string>
     <string name="e">E</string>
     <string name="f">F</string>
-    <string name="link_collector">Link Collector</string>
+    <string name="link_collector">Link</string>
     <string name="item_name">Item name</string>
     <string name="item_description">Description</string>
     <string name="description">This image acts as an icon.</string>
@@ -19,5 +19,5 @@
     <string name="url_popup_cancel">Cancel</string>
     <string name="location_latitude">Latitude</string>
     <string name="location_longitude">Longitude</string>
-    <string name="location_btn">Location</string>
+    <string name="location_btn">Loc</string>
 </resources>
